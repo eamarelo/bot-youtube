@@ -1,0 +1,25 @@
+{
+  "name": "bot-youtube",
+  "version": "1.0.0",
+  "description": "bot youtube for chatbot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eamarelo/bot-youtube.git"
+  },
+  "author": "Elies AMARELO",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eamarelo/bot-youtube/issues"
+  },
+  "homepage": "https://github.com/eamarelo/bot-youtube#readme",
+  "devDependencies": {
+    "eslint": "^4.18.2"
+  },
+  "dependencies": {
+    "request": "^2.83.0"
+  }
+}
