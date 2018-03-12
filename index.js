@@ -4,54 +4,53 @@ const appCredentials = {
 	"secret"    : "C1yD0eY7sT2yL8sJ4yR4tX5fW7eP7tV1dC6qA7fX4aU1gQ8oX8"
 };
 
-var options = {
-	method: 'GET',
-	url: 'https://api.fr.carrefour.io/v1/openapi/stores',
-	qs: {
-		longitude: message[1],
-		latitude: message[0],
-		radius: '5000'
-	},
-	headers:{
-		accept: 'application/json',
-		'x-ibm-client-secret': appCredentials.secret,
-		'x-ibm-client-id':  appCredentials.id_client
-	} 
-};
-
-module.exports = class Botcarefour {
-	constructor (lng, lat) {
-		this.lng = lng;
-		this.lat = lat;
+module.exports = class BotYoutube {
+	constructor (keyword) {
+		this.keyword = keyword;
 	}
 
-	init(){
+	init(callback){
+		console.log(this.keyword)
 		var options = {
 			method: 'GET',
-			url: 'https://api.fr.carrefour.io/v1/openapi/stores',
-			qs: {
-				longitude: message[1],
-				latitude: message[0],
-				radius: '5000'
-			},
+			url: 'https://www.googleapis.com/youtube/v3/search?part=snippet&q=' + this.keyword + '&key=AIzaSyBHUsxQvMVXD95PK5ewUz6xw7ZCes2QnIk',
 			headers:{
 				accept: 'application/json',
-				'x-ibm-client-secret': appCredentials.secret,
-				'x-ibm-client-id':  appCredentials.id_client
 			} 
 		};
 
-		request(options, function (error, response, body) {
+		request(options, (error, response, body) => {
 			if (error) return  console.error('Failed: %s', error.message);
 
 			else {
-				console.log('succes')
-				const json = JSON.parse(body);
-				for(var k=0; k < json.list.length; k++){
-					socket.emit('messageCarrefour', json.list[k]);
-				}   
+				console.log('succes '+ body);
+				callback(body);
+				return body;
 			}
 		});
+	}
+
+		echo () {
+		var sync = true;
+
+		this.init(result => {
+			this.setJson(result);
+			sync = false;
+		});
+		while (sync) {
+			require('deasync').sleep(100);
+		}
+	}
+
+	setJson (json) {
+		this.json = JSON.parse(json);
+	}
+
+	getJson () {
+		return this.json;
+	}
+	getIdVideo (i) {
+		return this.json.items[i].id.videoId;
 	}
 }
 
